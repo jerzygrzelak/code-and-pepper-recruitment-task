@@ -1,1 +1,10 @@
-<p>game-mode-select works!</p>
+<mat-form-field>
+  <mat-label>Game mode</mat-label>
+  <mat-select
+    (selectionChange)="onGameModeChange($event.value)"
+    [(value)]="gameMode"
+  >
+    <mat-option [value]="'PEOPLE'">People</mat-option>
+    <mat-option [value]="'STARSHIPS'">Starships</mat-option>
+  </mat-select>
+</mat-form-field>

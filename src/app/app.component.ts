@@ -1,4 +1,4 @@
-import {Component} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {RouterOutlet} from '@angular/router';
 import {MatCard, MatCardContent} from "@angular/material/card";
 import {ScoreCounterComponent} from "./components/score-counter/score-counter.component";
@@ -7,6 +7,11 @@ import {MatButton, MatFabButton} from "@angular/material/button";
 import {MatRadioButton, MatRadioGroup} from "@angular/material/radio";
 import {MatFormField, MatLabel} from "@angular/material/form-field";
 import {MatOption, MatSelect} from "@angular/material/select";
+import {RoundCounterComponent} from "./components/round-counter/round-counter.component";
+import {GameModeSelectComponent} from "./components/game-mode-select/game-mode-select.component";
+import {PlayButtonComponent} from "./components/play-button/play-button.component";
+import {CardComponent} from "./components/card/card.component";
+import {Store} from "@ngxs/store";
 
 @Component({
   selector: 'app-root',
@@ -26,10 +31,19 @@ import {MatOption, MatSelect} from "@angular/material/select";
     MatSelect,
     MatOption,
     MatLabel,
+    RoundCounterComponent,
+    GameModeSelectComponent,
+    PlayButtonComponent,
+    CardComponent,
   ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss'
 })
 export class AppComponent {
-  title = 'code-and-pepper-recruitment-task';
+  constructor(private store: Store) {
+  }
+  //
+  // public ngOnInit(): void {
+  //   this.store.dispatch()
+  // }
 }

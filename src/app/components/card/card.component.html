@@ -1,1 +1,35 @@
-<p>card works!</p>
+<mat-card appearance="outlined">
+  <mat-card-header>
+    <mat-card-title>
+      Press <b>Play</b> to start!
+    </mat-card-title>
+  </mat-card-header>
+  <mat-card-content>
+    <img
+      [width]="placeholderWidth"
+      [height]="placeholderHeight"
+      src="swlogo.png"
+    />
+  </mat-card-content>
+<!--  <mat-card-header>-->
+<!--    <mat-card-title>{{ resource.name }} {{resource.constructor.name}}</mat-card-title>-->
+<!--    @if (gameMode === 'STARSHIPS') {-->
+<!--      <mat-card-subtitle >{{ resource!.model }}</mat-card-subtitle>-->
+<!--    }-->
+<!--  </mat-card-header>-->
+<!--  <mat-card-content>-->
+<!--    @if (gameMode === 'PEOPLE') {-->
+<!--      <div>Mass: {{ resource.mass }}kg</div>-->
+<!--      <div>Height: {{ +resource.height / 100 }}m</div>-->
+<!--      <div>Birth year: {{ resource.birth_year }}</div>-->
+<!--      <div>Gender: {{ resource.gender }}</div>-->
+<!--      <div>Homeworld: {{ resource.homeworld }}</div>-->
+<!--    } @else {-->
+<!--      <div>Manufacturer: {{ resource.manufacturer }}</div>-->
+<!--      <div>Crew: {{ resource.crew }}</div>-->
+<!--      <div>Passengers: {{ resource.passengers }}</div>-->
+<!--      <div>Price: ᖬ{{ resource.cost_in_credits }}</div>-->
+<!--      <div>Length: {{ resource.length }}</div>-->
+<!--    }-->
+<!--  </mat-card-content>-->
+</mat-card>

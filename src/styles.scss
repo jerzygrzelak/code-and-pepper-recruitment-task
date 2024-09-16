@@ -1,13 +1,12 @@
 @use '@angular/material' as mat;
 
+.material-icons {
+  font-family: 'Material Icons' !important;
+}
 
-$my-typography: mat.define-typography(
-  $config: (
-    plain-family: 'Electrolize',
-    brand-family: 'Electrolize',
-  ),
-);
-@include mat.typography-hierarchy($my-typography);
+* {
+  font-family: 'Electrolize', serif !important;
+}
 
 html, body {
   height: 100%;
@@ -15,8 +14,7 @@ html, body {
 
 body {
   margin: 0;
-  //font-family: "Press Start 2P";
-  .mdc-button__label {
+  mat-label, .mdc-button__label, .mdc-list-item__primary-text {
     font: 400 1rem / 1.5rem 'Electrolize' !important;
   }
 
@@ -29,7 +27,7 @@ body {
       .cards {
         display: flex;
         flex-direction: row;
-        justify-content: center;
+        align-items: center;
         gap: 5rem;
 
         h1 {

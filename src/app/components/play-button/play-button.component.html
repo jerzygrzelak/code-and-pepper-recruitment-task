@@ -1,1 +1,12 @@
-<p>play-button works!</p>
+<button
+  (click)="startRound()"
+  mat-fab extended
+>
+  <mat-icon
+    *ngIf="!isFirstRound"
+    aria-hidden="false"
+    aria-label="Replay icon"
+    fontIcon="replay"
+  />
+  <b>{{ isFirstRound ? 'Play' : 'Next round' }}</b>
+</button>

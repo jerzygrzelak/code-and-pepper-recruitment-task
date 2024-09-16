@@ -20,6 +20,12 @@
     "@angular/platform-browser": "^18.0.0",
     "@angular/platform-browser-dynamic": "^18.0.0",
     "@angular/router": "^18.0.0",
+    "@ngxs/devtools-plugin": "18.1.1",
+    "@ngxs/form-plugin": "18.1.1",
+    "@ngxs/hmr-plugin": "18.1.1",
+    "@ngxs/logger-plugin": "18.1.1",
+    "@ngxs/router-plugin": "18.1.1",
+    "@ngxs/store": "^18.1.1",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0",
     "zone.js": "~0.14.3"

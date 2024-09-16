@@ -10,5 +10,4 @@ import { Component } from '@angular/core';
 export class ScoreCounterComponent {
   public player1Score: number = 0;
   public player2Score: number = 0;
-  public round: number = 1;
 }

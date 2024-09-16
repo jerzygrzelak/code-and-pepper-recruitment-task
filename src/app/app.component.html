@@ -1,28 +1,15 @@
-
 <main class="main">
   <div class="game-container">
+    <app-round-counter/>
     <app-score-counter/>
     <div class="cards">
-      <mat-card appearance="outlined">
-        <mat-card-content>Simple card</mat-card-content>
-      </mat-card>
+      <app-card/>
       <h1 class="mb-0"> VS </h1>
-      <mat-card appearance="outlined">
-        <mat-card-content>Simple card</mat-card-content>
-      </mat-card>
+      <app-card/>
     </div>
-    <button mat-stroked-button>
-      <mat-icon aria-hidden="false" aria-label="Replay icon" fontIcon="replay"></mat-icon>
-      Play
-    </button>
-    <mat-form-field>
-      <mat-label>Game mode</mat-label>
-      <mat-select>
-        <mat-option [value]="'people'">People</mat-option>
-        <mat-option [value]="'starships'">Starships</mat-option>
-      </mat-select>
-    </mat-form-field>
+    <app-play-button/>
+    <app-game-mode-select/>
   </div>
 </main>
 
-<router-outlet />
+<router-outlet/>
