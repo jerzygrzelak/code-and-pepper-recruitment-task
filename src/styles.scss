@@ -1,1 +1,41 @@
-/* You can add global styles to this file, and also import other style files */
+@use '@angular/material' as mat;
+
+
+$my-typography: mat.define-typography(
+  $config: (
+    plain-family: 'Electrolize',
+    brand-family: 'Electrolize',
+  ),
+);
+@include mat.typography-hierarchy($my-typography);
+
+html, body {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  //font-family: "Press Start 2P";
+  .mdc-button__label {
+    font: 400 1rem / 1.5rem 'Electrolize' !important;
+  }
+
+  .main {
+    .game-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+
+      .cards {
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        gap: 5rem;
+
+        h1 {
+          margin-bottom: 0 !important;
+        }
+      }
+    }
+  }
+}
