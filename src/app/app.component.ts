@@ -12,6 +12,7 @@ import {GameModeSelectComponent} from "./components/game-mode-select/game-mode-s
 import {PlayButtonComponent} from "./components/play-button/play-button.component";
 import {CardComponent} from "./components/card/card.component";
 import {Store} from "@ngxs/store";
+import {CardsDisplayComponent} from "./components/cards-display/cards-display.component";
 
 @Component({
   selector: 'app-root',
@@ -35,6 +36,7 @@ import {Store} from "@ngxs/store";
     GameModeSelectComponent,
     PlayButtonComponent,
     CardComponent,
+    CardsDisplayComponent,
   ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss'

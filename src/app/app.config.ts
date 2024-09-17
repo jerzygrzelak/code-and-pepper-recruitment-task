@@ -11,6 +11,7 @@ import {provideStore} from '@ngxs/store';
 import {provideHttpClient, withInterceptorsFromDi} from "@angular/common/http";
 import {PersonState} from "./store/person.state";
 import {GameInfoState} from "./store/game-info.state";
+import {StarshipState} from "./store/starship.state";
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -19,10 +20,14 @@ export const appConfig: ApplicationConfig = {
     provideHttpClient(withInterceptorsFromDi()),
     provideAnimationsAsync(),
     provideStore(
-      [PersonState, GameInfoState],
+      [
+        PersonState,
+        StarshipState,
+        GameInfoState
+      ],
       withNgxsReduxDevtoolsPlugin(),
       withNgxsFormPlugin(),
-      withNgxsLoggerPlugin(),
+      // withNgxsLoggerPlugin(),
       withNgxsRouterPlugin(),
 
     )

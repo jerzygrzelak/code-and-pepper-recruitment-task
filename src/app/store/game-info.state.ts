@@ -1,6 +1,8 @@
 import {Injectable} from "@angular/core";
-import {Action, Selector, State, StateContext} from "@ngxs/store";
+import {Action, Selector, State, StateContext, Store} from "@ngxs/store";
 import {Person, Starship} from "../models";
+import {PersonState} from "./person.state";
+import {StarshipState} from "./starship.state";
 
 export type GameMode = 'PEOPLE' | 'STARSHIPS';
 export type RoundResult = 'PLAYER1' | 'PLAYER2' | 'DRAW';
@@ -14,9 +16,6 @@ export class UpdateScore {
 
 export class UpdateCards {
   static readonly type = '[GameInfo] Update cards';
-
-  constructor(public player1Card: Person | Starship, public player2Card: Person | Starship) {
-  }
 }
 
 export class IncrementRound {
@@ -53,11 +52,21 @@ export interface GameInfoStateModel {
 
 @Injectable()
 export class GameInfoState {
+  constructor(private store: Store) {}
+
   @Selector()
   static playerScores(state: GameInfoStateModel): { player1Score: number, player2Score: number } {
     return {
       player1Score: state.player1Score,
       player2Score: state.player2Score
+    };
+  }
+
+  @Selector()
+  static playerCards(state: GameInfoStateModel): { player1Card: Person | Starship | null , player2Card: Person | Starship | null  } {
+    return {
+      player1Card: state.player1Card,
+      player2Card: state.player2Card
     };
   }
 
@@ -119,10 +128,13 @@ export class GameInfoState {
   @Action(UpdateCards)
   updatePlayerCards(ctx: StateContext<GameInfoStateModel>, action: UpdateCards) {
     const state = ctx.getState();
+    const cards = state.gameMode === 'PEOPLE'
+      ? this.store.selectSnapshot(PersonState.getRandomPeople)
+      : this.store.selectSnapshot(StarshipState.getRandomStarships);
     ctx.setState({
       ...state,
-      player1Card: action.player1Card,
-      player2Card: action.player2Card,
+      player1Card: cards[0],
+      player2Card: cards[1],
     });
   }
 }

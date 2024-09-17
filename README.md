@@ -20,4 +20,15 @@ random Star Wars characters or starships, compares them based on a common attrib
 ### Additional requirements fulfilled:
 :white_check_mark: Score counter implemented. \
 :white_check_mark: Resource selection (aka game mode) implemented. \
-:white_check_mark: Angular Material and Card component used. \
+:white_check_mark: Angular Material and Card component used. 
+
+---
+
+### Running the project.
+#### To start the app locally run: 
+```
+npm install
+ng serve
+```
+
+#### To start the app locally run: 

@@ -5,7 +5,8 @@ import {NgIf} from "@angular/common";
 import {SwapiService} from "../../services/swapi.service";
 import { Store} from "@ngxs/store";
 import {GetPeople} from "../../store/person.state";
-import {GameInfoState, IncrementRound} from "../../store/game-info.state";
+import {GameInfoState, IncrementRound, UpdateCards} from "../../store/game-info.state";
+import {GetStarships} from "../../store/starship.state";
 
 
 @Component({
@@ -31,6 +32,7 @@ export class PlayButtonComponent implements OnInit {
 
   public ngOnInit(): void {
     this.store.dispatch(new GetPeople());
+    this.store.dispatch(new GetStarships());
     this.store.select(GameInfoState.roundNumber).subscribe(roundNumber => {
       this.isFirstRound = roundNumber === 1;
     });
@@ -38,5 +40,6 @@ export class PlayButtonComponent implements OnInit {
 
   public startRound(): void {
     this.store.dispatch(new IncrementRound());
+    this.store.dispatch(new UpdateCards())
   }
 }
