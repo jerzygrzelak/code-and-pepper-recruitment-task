@@ -3,9 +3,9 @@ import {MatIcon} from "@angular/material/icon";
 import {MatButton, MatFabButton} from "@angular/material/button";
 import {NgIf} from "@angular/common";
 import {SwapiService} from "../../services/swapi.service";
-import { Store} from "@ngxs/store";
+import {Store} from "@ngxs/store";
 import {GetPeople} from "../../store/person.state";
-import {GameInfoState, IncrementRound, UpdateCards} from "../../store/game-info.state";
+import {ChangeGameMode, GameInfoState, IncrementRound, UpdateCards, UpdateScore} from "../../store/game-info.state";
 import {GetStarships} from "../../store/starship.state";
 
 
@@ -40,6 +40,8 @@ export class PlayButtonComponent implements OnInit {
 
   public startRound(): void {
     this.store.dispatch(new IncrementRound());
-    this.store.dispatch(new UpdateCards())
+    this.store.dispatch(new UpdateCards());
+    this.store.dispatch(new ChangeGameMode());
+    this.store.dispatch(new UpdateScore());
   }
 }

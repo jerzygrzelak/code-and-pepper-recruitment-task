@@ -1,5 +1,7 @@
 <div class="score-counter-container">
   <h3>Player 1</h3>
-  <h3>{{ player1Score }} : {{ player2Score }}</h3>
+  <h2>
+    <b>{{ (playerScores$ | async)!.player1Score }} : {{ (playerScores$| async)!.player2Score }}</b>
+  </h2>
   <h3>Player 2</h3>
 </div>

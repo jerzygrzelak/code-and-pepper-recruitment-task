@@ -13,12 +13,13 @@ import {PlayButtonComponent} from "./components/play-button/play-button.componen
 import {CardComponent} from "./components/card/card.component";
 import {Store} from "@ngxs/store";
 import {CardsDisplayComponent} from "./components/cards-display/cards-display.component";
+import {AsyncPipe} from "@angular/common";
 
 @Component({
   selector: 'app-root',
   standalone: true,
   imports: [
-    RouterOutlet,
+        RouterOutlet,
     MatCard,
     MatCardContent,
     ScoreCounterComponent,
@@ -37,6 +38,7 @@ import {CardsDisplayComponent} from "./components/cards-display/cards-display.co
     PlayButtonComponent,
     CardComponent,
     CardsDisplayComponent,
+    AsyncPipe,
   ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss'

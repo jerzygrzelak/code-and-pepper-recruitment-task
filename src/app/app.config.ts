@@ -12,6 +12,7 @@ import {provideHttpClient, withInterceptorsFromDi} from "@angular/common/http";
 import {PersonState} from "./store/person.state";
 import {GameInfoState} from "./store/game-info.state";
 import {StarshipState} from "./store/starship.state";
+import {AsyncPipe} from "@angular/common";
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -29,7 +30,6 @@ export const appConfig: ApplicationConfig = {
       withNgxsFormPlugin(),
       // withNgxsLoggerPlugin(),
       withNgxsRouterPlugin(),
-
-    )
+    ),
   ]
 };

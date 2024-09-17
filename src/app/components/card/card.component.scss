@@ -1,0 +1,12 @@
+mat-card {
+  //height: 200px;
+  width: 300px;
+
+  .attributes-container {
+    gap: 1rem;
+  }
+}
+
+.winner-highlight {
+  border: 3px solid rgba(11, 154, 33, 0.81);
+}

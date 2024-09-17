@@ -1,12 +1,10 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {MatCard, MatCardContent, MatCardHeader, MatCardSubtitle, MatCardTitle} from "@angular/material/card";
-import {GameMode} from "../../store/game-info.state";
+import {GameInfoState, GameMode} from "../../store/game-info.state";
 import {Store} from "@ngxs/store";
 import {DecimalPipe} from "@angular/common";
 import {TypeofPipe} from "../../pipes/typeof.pipe";
 import {Person, Starship} from "../../models";
-
-export type Resource = Person | Starship;
 
 @Component({
   selector: 'app-card',
@@ -25,26 +23,25 @@ export type Resource = Person | Starship;
 })
 export class CardComponent implements OnInit {
   @Input()
-  public resource: Resource;
+  public person: Person | null;
 
+  @Input()
+  public starship: Starship | null;
+
+  @Input()
   public isGameStarted: boolean = false;
+
+  @Input()
   public gameMode: GameMode;
-  public placeholderWidth: number = 400;
-  public placeholderHeight: number = 200;
+
+  @Input()
+  public borderHighlight: any;
+
+  public placeholderWidth: number = 250;
+  public placeholderHeight: number = 125;
 
   constructor(private store: Store) {
   }
 
-  public ngOnInit(): void {
-    // this.store.select(GameInfoState.gameMode).pipe(
-    //   combineLatestWith(this.store.select(GameInfoState.roundNumber)),
-    //   combineLatestWith(this.store.select(GameInfoState.playerCards)),
-    //   map(([[gameMode, roundNumber], cards]) => {
-    //     this.gameMode = gameMode;
-    //     console.log(roundNumber)
-    //     this.isGameStarted = roundNumber !== 1;
-    //   })
-    // ).subscribe();
-  }
+  public ngOnInit(): void {}
 }
-

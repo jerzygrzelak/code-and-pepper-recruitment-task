@@ -2,7 +2,7 @@ import {Component, Input, OnInit} from '@angular/core';
 import {MatFormField, MatLabel} from "@angular/material/form-field";
 import {MatOption, MatSelect} from "@angular/material/select";
 import {Store} from "@ngxs/store";
-import {ChangeGameMode, GameInfoState, GameMode} from "../../store/game-info.state";
+import {ChangeGameMode, GameInfoState, GameMode, TriggerChangeGameMode} from "../../store/game-info.state";
 
 @Component({
   selector: 'app-game-mode-select',
@@ -29,6 +29,6 @@ export class GameModeSelectComponent implements OnInit{
   }
 
   public onGameModeChange(newGameMode: GameMode): void {
-    this.store.dispatch(new ChangeGameMode(newGameMode));
+    this.store.dispatch(new TriggerChangeGameMode(true));
   }
 }
