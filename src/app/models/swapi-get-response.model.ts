@@ -1,4 +1,3 @@
-
 export interface SwapiGetResponse<T> {
   count: number;
   next: string | null;

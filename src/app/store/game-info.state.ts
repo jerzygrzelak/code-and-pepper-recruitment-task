@@ -1,12 +1,14 @@
-import {Injectable} from "@angular/core";
-import {Action, Selector, State, StateContext, Store} from "@ngxs/store";
-import {Person, Starship} from "../models";
-import {PersonState, RemoveUsedPeople} from "./person.state";
-import {RemoveUsedStarships, StarshipState} from "./starship.state";
-import _ from "lodash";
+import { Injectable } from '@angular/core';
+import { Action, Selector, State, StateContext, Store } from '@ngxs/store';
+import { Person, Starship } from '../models';
+import { PersonState, RemoveUsedPeople } from './person.state';
+import { RemoveUsedStarships, StarshipState } from './starship.state';
 
 export type GameMode = 'PEOPLE' | 'STARSHIPS';
-export type RoundResult = 'PLAYER1' | 'PLAYER2' | 'DRAW';
+
+export class StartRound {
+  static readonly type = '[GameInfo] Start round';
+}
 
 export class UpdateScore {
   static readonly type = '[GameInfo] Update score';
@@ -100,32 +102,19 @@ export class GameInfoState {
     return state.gameMode;
   }
 
-  // @Action(UpdateScore)
-  // updateScore(ctx: StateContext<GameInfoStateModel>, action: UpdateScore) {
-  //   const state = ctx.getState();
-  //
-  //   switch (action.result) {
-  //     case 'PLAYER1':
-  //       ctx.setState({
-  //         ...state,
-  //         player1Score: state.player1Score + 1
-  //       });
-  //       break;
-  //     case 'PLAYER2':
-  //       ctx.setState({
-  //         ...state,
-  //         player2Score: state.player2Score + 1
-  //       });
-  //       break;
-  //     case 'DRAW':
-  //       ctx.setState({
-  //         ...state,
-  //         player1Score: state.player1Score + 1,
-  //         player2Score: state.player2Score + 1
-  //       });
-  //       break;
-  //   }
-  // }
+  @Action(StartRound)
+  startRound(ctx: StateContext<GameInfoStateModel>) {
+    const state = ctx.getState();
+
+    this.store.dispatch(new IncrementRound());
+
+    if (state.gameModeChangeTriggered) {
+      this.store.dispatch(new ChangeGameMode());
+    }
+
+    this.store.dispatch(new UpdateCards());
+    this.store.dispatch(new UpdateScore());
+  }
 
   @Action(IncrementRound)
   incrementRound(ctx: StateContext<GameInfoStateModel>) {
@@ -148,19 +137,17 @@ export class GameInfoState {
   @Action(ChangeGameMode)
   changeGameMode(ctx: StateContext<GameInfoStateModel>) {
     const state = ctx.getState();
-    if (state.gameModeChangeTriggered) {
-      const newGameMode = state.gameMode === 'PEOPLE' ? 'STARSHIPS' : 'PEOPLE';
+    const newGameMode = state.gameMode === 'PEOPLE' ? 'STARSHIPS' : 'PEOPLE';
 
-      ctx.setState({
-        ...state,
-        gameMode: newGameMode,
-        gameModeChangeTriggered: false
-      });
-    }
+    ctx.setState({
+      ...state,
+      gameMode: newGameMode,
+      gameModeChangeTriggered: false
+    });
   }
 
   @Action(UpdateCards)
-  updatePlayerCards(ctx: StateContext<GameInfoStateModel>, action: UpdateCards) {
+  updatePlayerCards(ctx: StateContext<GameInfoStateModel>) {
     const state = ctx.getState();
     const cards = state.gameMode === 'PEOPLE'
       ? this.store.selectSnapshot(PersonState.getRandomPeople)
@@ -180,61 +167,64 @@ export class GameInfoState {
   @Action(UpdateScore)
   updatePlayerScore(ctx: StateContext<GameInfoStateModel>) {
     const state = ctx.getState();
+    if (state.roundNumber !== 1) {
+      const player1Card = state.player1Card;
+      const player2Card = state.player2Card;
 
-    const player1Card = state.player1Card;
-    const player2Card = state.player2Card;
+      let player1Value: number = 0;
+      let player2Value: number = 0;
 
-    let player1Value: number = 0;
-    let player2Value: number = 0;
+      if (state.gameMode === 'PEOPLE') {
+        player1Value = (player1Card as Person).mass;
+        player2Value = (player2Card as Person).mass;
+      } else if (state.gameMode === 'STARSHIPS') {
+        player1Value = (player1Card as Starship).crew;
+        player2Value = (player2Card as Starship).crew;
+      }
 
-    if (state.gameMode === 'PEOPLE') {
-      const player1Mass = (player1Card as Person).mass === 'unknown' ? '0' : (player1Card as Person).mass;
-      const player2Mass = (player2Card as Person).mass === 'unknown' ? '0' : (player2Card as Person).mass;
-
-      player1Value = parseInt(player1Mass);
-      player2Value = parseInt(player2Mass);
+      let winner: string = 'Player 1';
       console.log(player1Value, player2Value);
-    } else if (state.gameMode === 'STARSHIPS') {
-      player1Value = parseInt((player1Card as Starship).crew);
-      player2Value = parseInt((player2Card as Starship).crew);
+      console.log(player1Value > player2Value, player1Value < player2Value, player1Value === player2Value)
+      if (player1Value > player2Value) {
+        winner = 'Player 1';
+        console.log(winner, player1Value)
+      }
+      if (player1Value < player2Value) {
+        winner = 'Player 2';
+        console.log(winner, player2Value)
+      }
+      if (player1Value === player2Value) {
+        winner = 'Draw';
+        console.log(winner, player1Value, player2Value)
+      }
+
+      let player1Score = state.player1Score;
+      let player2Score = state.player2Score;
+      let hasPlayer1Won;
+      let hasPlayer2Won;
+
+      if (winner === 'Player 1') {
+        player1Score += 1;
+        hasPlayer1Won = true;
+        hasPlayer2Won = false;
+      } else if (winner === 'Player 2') {
+        player2Score += 1;
+        hasPlayer1Won = false;
+        hasPlayer2Won = true;
+      } else {
+        player1Score += 1;
+        player2Score += 1;
+        hasPlayer1Won = true;
+        hasPlayer2Won = true;
+      }
+
+      ctx.setState({
+        ...state,
+        player1Score: player1Score,
+        player2Score: player2Score,
+        hasPlayer1Won: hasPlayer1Won,
+        hasPlayer2Won: hasPlayer2Won,
+      });
     }
-
-    let winner: string;
-
-    if (player1Value > player2Value) {
-      winner = 'Player 1';
-    } else if (player2Value > player1Value) {
-      winner = 'Player 2';
-    } else {
-      winner = 'Draw';
-    }
-
-    let player1Score = state.player1Score;
-    let player2Score = state.player2Score;
-    let hasPlayer1Won;
-    let hasPlayer2Won;
-
-    if (winner === 'Player 1') {
-      player1Score += 1;
-      hasPlayer1Won = true;
-      hasPlayer2Won = false;
-    } else if (winner === 'Player 2') {
-      player2Score += 1;
-      hasPlayer1Won = false;
-      hasPlayer2Won = true;
-    } else {
-      player1Score += 1;
-      player2Score += 1;
-      hasPlayer1Won = true;
-      hasPlayer2Won = true;
-    }
-
-    ctx.setState({
-      ...state,
-      player1Score: player1Score,
-      player2Score: player2Score,
-      hasPlayer1Won: hasPlayer1Won,
-      hasPlayer2Won: hasPlayer2Won,
-    });
   }
 }

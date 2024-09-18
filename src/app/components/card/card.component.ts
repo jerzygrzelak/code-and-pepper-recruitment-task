@@ -1,10 +1,8 @@
-import {Component, Input, OnInit} from '@angular/core';
-import {MatCard, MatCardContent, MatCardHeader, MatCardSubtitle, MatCardTitle} from "@angular/material/card";
-import {GameInfoState, GameMode} from "../../store/game-info.state";
-import {Store} from "@ngxs/store";
-import {DecimalPipe} from "@angular/common";
-import {TypeofPipe} from "../../pipes/typeof.pipe";
-import {Person, Starship} from "../../models";
+import { Component, Input } from '@angular/core';
+import { MatCard, MatCardContent, MatCardHeader, MatCardSubtitle, MatCardTitle } from '@angular/material/card';
+import { GameMode } from '../../store/game-info.state';
+import { DecimalPipe } from '@angular/common';
+import { Person, Starship } from '../../models';
 
 @Component({
   selector: 'app-card',
@@ -16,12 +14,11 @@ import {Person, Starship} from "../../models";
     MatCardHeader,
     MatCardSubtitle,
     DecimalPipe,
-    TypeofPipe,
   ],
   templateUrl: './card.component.html',
   styleUrl: './card.component.scss'
 })
-export class CardComponent implements OnInit {
+export class CardComponent {
   @Input()
   public person: Person | null;
 
@@ -39,9 +36,4 @@ export class CardComponent implements OnInit {
 
   public placeholderWidth: number = 250;
   public placeholderHeight: number = 125;
-
-  constructor(private store: Store) {
-  }
-
-  public ngOnInit(): void {}
 }

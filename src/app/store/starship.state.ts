@@ -1,11 +1,10 @@
-import {Action, Selector, State, StateContext, Store} from "@ngxs/store";
-import {Injectable} from "@angular/core";
-import {SwapiService} from "../services/swapi.service";
-import {catchError, of, tap} from "rxjs";
-import {SwapiGetResponse} from "../models";
-import {Starship} from "../models";
-import * as _ from "lodash";
-import {GetPeople, PersonStateModel} from "./person.state";
+import { Action, Selector, State, StateContext, Store } from '@ngxs/store';
+import { Injectable } from '@angular/core';
+import { SwapiService } from '../services/swapi.service';
+import { catchError, of, tap } from 'rxjs';
+import { Starship, SwapiGetResponse } from '../models';
+import * as _ from 'lodash';
+import { plainToInstance } from 'class-transformer';
 
 export class GetStarships {
   static readonly type = '[Starship] Get page';
@@ -75,7 +74,7 @@ export class StarshipState {
         const match = result.next?.match(pageNumberRegex);
         ctx.setState({
           ...state,
-          starships: result.results,
+          starships: plainToInstance(Starship, result.results),
           nextPage: match ? +match[1] || 1 : 1,
         });
       }),

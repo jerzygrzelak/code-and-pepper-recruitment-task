@@ -1,18 +1,16 @@
-import {ApplicationConfig, provideZoneChangeDetection} from '@angular/core';
-import {provideRouter} from '@angular/router';
+import { ApplicationConfig, provideZoneChangeDetection } from '@angular/core';
+import { provideRouter } from '@angular/router';
 
-import {routes} from './app.routes';
-import {provideAnimationsAsync} from '@angular/platform-browser/animations/async';
-import {withNgxsReduxDevtoolsPlugin} from '@ngxs/devtools-plugin';
-import {withNgxsFormPlugin} from '@ngxs/form-plugin';
-import {withNgxsLoggerPlugin} from '@ngxs/logger-plugin';
-import {withNgxsRouterPlugin} from '@ngxs/router-plugin';
-import {provideStore} from '@ngxs/store';
-import {provideHttpClient, withInterceptorsFromDi} from "@angular/common/http";
-import {PersonState} from "./store/person.state";
-import {GameInfoState} from "./store/game-info.state";
-import {StarshipState} from "./store/starship.state";
-import {AsyncPipe} from "@angular/common";
+import { routes } from './app.routes';
+import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
+import { withNgxsReduxDevtoolsPlugin } from '@ngxs/devtools-plugin';
+import { withNgxsFormPlugin } from '@ngxs/form-plugin';
+import { withNgxsRouterPlugin } from '@ngxs/router-plugin';
+import { provideStore } from '@ngxs/store';
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
+import { PersonState } from './store/person.state';
+import { GameInfoState } from './store/game-info.state';
+import { StarshipState } from './store/starship.state';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -28,7 +26,6 @@ export const appConfig: ApplicationConfig = {
       ],
       withNgxsReduxDevtoolsPlugin(),
       withNgxsFormPlugin(),
-      // withNgxsLoggerPlugin(),
       withNgxsRouterPlugin(),
     ),
   ]

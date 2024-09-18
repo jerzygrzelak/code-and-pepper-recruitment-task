@@ -1,7 +1,11 @@
 <button
   (click)="startRound()"
-  mat-fab extended
+  [disabled]="isDataLoading"
+  extended mat-fab
 >
+  @if (isDataLoading) {
+    <mat-spinner diameter="20"/>
+  }
   <mat-icon
     *ngIf="!isFirstRound"
     aria-hidden="false"
