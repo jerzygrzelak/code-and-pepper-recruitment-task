@@ -72,6 +72,7 @@ export class PersonState {
     return this.swapiService.getPeople(pageNumber).pipe(
       tap((result: SwapiGetResponse<Person>) => {
         const match = result.next?.match(pageNumberRegex);
+
         ctx.setState({
           ...state,
           people: plainToInstance(Person, result.results),
@@ -80,6 +81,7 @@ export class PersonState {
       }),
       catchError((error) => {
         console.error('Error fetching people:', error);
+
         return of([]);
       })
     );

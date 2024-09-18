@@ -1,9 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, DestroyRef, inject, OnInit } from '@angular/core';
 import { CardComponent } from '../card/card.component';
 import { GameInfoState, GameMode } from '../../store/game-info.state';
 import { combineLatestWith, map } from 'rxjs';
 import { Store } from '@ngxs/store';
 import { Person, Starship } from '../../models';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
   selector: 'app-cards-display',
@@ -23,6 +24,7 @@ export class CardsDisplayComponent implements OnInit {
   public hasPlayer2Won: boolean;
   public isGameStarted: boolean = false;
   public gameMode: GameMode;
+  private destroyedRef = inject(DestroyRef);
 
   constructor(private store: Store) {
   }
@@ -45,8 +47,8 @@ export class CardsDisplayComponent implements OnInit {
           this.player1Starship = cards.player1Card as Starship;
           this.player2Starship = cards.player2Card as Starship;
         }
-      })
+      }),
+      takeUntilDestroyed(this.destroyedRef),
     ).subscribe();
   }
-
 }

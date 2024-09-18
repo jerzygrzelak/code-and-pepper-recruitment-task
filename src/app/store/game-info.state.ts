@@ -119,6 +119,7 @@ export class GameInfoState {
   @Action(IncrementRound)
   incrementRound(ctx: StateContext<GameInfoStateModel>) {
     const state = ctx.getState();
+
     ctx.setState({
       ...state,
       roundNumber: state.roundNumber + 1
@@ -128,6 +129,7 @@ export class GameInfoState {
   @Action(TriggerChangeGameMode)
   triggerChangeGameMode(ctx: StateContext<GameInfoStateModel>, action: TriggerChangeGameMode) {
     const state = ctx.getState();
+
     ctx.setState({
       ...state,
       gameModeChangeTriggered: action.trigger
@@ -183,19 +185,14 @@ export class GameInfoState {
       }
 
       let winner: string = 'Player 1';
-      console.log(player1Value, player2Value);
-      console.log(player1Value > player2Value, player1Value < player2Value, player1Value === player2Value)
       if (player1Value > player2Value) {
         winner = 'Player 1';
-        console.log(winner, player1Value)
       }
       if (player1Value < player2Value) {
         winner = 'Player 2';
-        console.log(winner, player2Value)
       }
       if (player1Value === player2Value) {
         winner = 'Draw';
-        console.log(winner, player1Value, player2Value)
       }
 
       let player1Score = state.player1Score;
