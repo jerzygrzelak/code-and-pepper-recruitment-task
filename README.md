@@ -1,6 +1,5 @@
 # Recruitment Task for the Frontend Developer Position at Code & Pepper.
 
----
 
 This project is a web app that uses <b>Star Wars API (SWAPI)</b>. The app selects two
 random Star Wars characters or starships, compares them based on a common attribute 
