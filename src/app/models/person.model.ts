@@ -13,25 +13,25 @@ export class Person {
   @Expose()
   public gender: string;
   @Exclude()
-  public hair_color: string;
+  public hair_color?: string;
   @Exclude()
-  public skin_color: string;
+  public skin_color?: string;
   @Exclude()
-  public eye_color: string;
+  public eye_color?: string;
   @Exclude()
-  public homeworld: string;
+  public homeworld?: string;
   @Exclude()
-  public films: string[];
+  public films?: string[];
   @Exclude()
-  public species: string[];
+  public species?: string[];
   @Exclude()
-  public vehicles: string[];
+  public vehicles?: string[];
   @Exclude()
-  public starships: string[];
+  public starships?: string[];
   @Exclude()
-  public created: string;
+  public created?: string;
   @Exclude()
-  public edited: string;
+  public edited?: string;
   @Exclude()
-  public url: string;
+  public url?: string;
 }

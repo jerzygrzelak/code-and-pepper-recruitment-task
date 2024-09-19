@@ -4,7 +4,7 @@
 >
   @if (!isGameStarted) {
     <mat-card-header>
-      <mat-card-title>
+      <mat-card-title data-testid="mat-card-title">
         Press <b>Play</b> to start!
       </mat-card-title>
     </mat-card-header>
@@ -23,29 +23,29 @@
     </mat-card-header>
     <mat-card-content>
       @if (gameMode === 'PEOPLE') {
-        <div>
+        <div data-testid="mass">
           <b>Mass:</b> {{ (person?.mass ? person?.mass : 'n/a ') + 'kg' }}
         </div>
-        <div>
+        <div data-testid="height">
           <b>Height:</b> {{ +person!.height / 100 }}m
         </div>
-        <div>
+        <div data-testid="birth-year">
           <b>Birth year:</b> {{ person?.birth_year }}
         </div>
-        <div>
+        <div data-testid="gender">
           <b>Gender:</b> {{ person?.gender }}
         </div>
       } @else {
-        <div>
+        <div data-testid="crew">
           <b>Crew:</b> {{ starship?.crew ? starship?.crew : 'n/a' }}
         </div>
-        <div>
+        <div data-testid="passengers">
           <b>Passengers:</b> {{ starship?.passengers }}
         </div>
-        <div>
+        <div data-testid="manufacturer">
           <b>Manufacturer:</b> {{ starship?.manufacturer }}
         </div>
-        <div>
+        <div data-testid="price">
           <b>Price:</b> ᖬ{{ starship?.cost_in_credits !== 'unknown' ?  starship!.cost_in_credits : '-' }}
         </div>
       }

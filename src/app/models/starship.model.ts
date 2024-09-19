@@ -16,27 +16,27 @@ export class Starship {
   @Expose()
   public passengers: string;
   @Exclude()
-  public length: string;
+  public length?: string;
   @Exclude()
-  public max_atmosphering_speed: string;
+  public max_atmosphering_speed?: string;
   @Exclude()
-  public cargo_capacity: string;
+  public cargo_capacity?: string;
   @Exclude()
-  public consumables: string;
+  public consumables?: string;
   @Exclude()
-  public hyperdrive_rating: string;
+  public hyperdrive_rating?: string;
   @Exclude()
-  public MGLT: string;
+  public MGLT?: string;
   @Exclude()
-  public starship_class: string;
+  public starship_class?: string;
   @Exclude()
-  public pilots: string[];
+  public pilots?: string[];
   @Exclude()
-  public films: string[];
+  public films?: string[];
   @Exclude()
-  public created: string;
+  public created?: string;
   @Exclude()
-  public edited: string;
+  public edited?: string;
   @Exclude()
-  public url: string;
+  public url?: string;
 }
