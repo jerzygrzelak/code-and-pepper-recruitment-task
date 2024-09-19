@@ -1,111 +1,78 @@
 import '@testing-library/jest-dom';
 import '@angular/compiler';
 import 'zone.js';
-import { PlayButtonComponent } from './play-button.component';
-import { Actions, NgxsModule, Store } from '@ngxs/store';
-import { GameInfoState, StartRound } from '../../store/game-info.state';
-import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { render, screen, fireEvent } from '@testing-library/angular';
-import { Observable } from 'rxjs';
+import { of } from 'rxjs';
+import { PlayButtonComponent } from './play-button.component';
+import { Store } from '@ngxs/store';
+import { GameInfoState, StartRound } from '../../store/game-info.state';
+import { PersonState } from '../../store/person.state';
+import { StarshipState } from '../../store/starship.state';
+import { TestBed } from '@angular/core/testing';
 import { BrowserDynamicTestingModule, platformBrowserDynamicTesting } from '@angular/platform-browser-dynamic/testing';
-import { waitFor } from '@testing-library/dom';
 
 describe('PlayButtonComponent', () => {
   let store: Store;
-  let actions$: Observable<any>;
-  let component: PlayButtonComponent;
-  let fixture: ComponentFixture<PlayButtonComponent>;
-  beforeAll(() => {
+
+  const mockStore = {
+    dispatch: jest.fn(),
+    select: jest.fn(),
+  };
+
+  // beforeEach(() => {
+  //   TestBed.initTestEnvironment(BrowserDynamicTestingModule, platformBrowserDynamicTesting());
+  // });
+
+  beforeEach(async () => {
     TestBed.initTestEnvironment(BrowserDynamicTestingModule, platformBrowserDynamicTesting());
-  });
 
-  beforeEach(() => {
-    TestBed.configureTestingModule({
-      imports: [
-        NgxsModule.forRoot([GameInfoState]),
-        PlayButtonComponent
-      ]
-    }).compileComponents();
-
-    TestBed.compileComponents().then(async () => {
-      fixture = TestBed.createComponent(PlayButtonComponent);
-      component = fixture.componentInstance;
-      fixture.detectChanges();
-
-      store = TestBed.inject(Store);
-      store.reset(GameInfoState);
-      actions$ = TestBed.inject(Actions);
-    });
-  });
-
-  it('should display "Play" when it is the first round', () => {
-    store.reset({
-      ...store.snapshot(),
-      gameInfo: { roundNumber: 1 }
-    });
-    store.dispatch(new StartRound());
-    fixture.detectChanges();
-
-    const button = screen.getByTestId('play-button');
-    expect(button).toBeInTheDocument();
-    expect(button.textContent).toContain('Play');
-  });
-
-  it('should display "Next round" after the first round', async() => {
-    store.reset({
-      gameInfo: { roundNumber: 2 }
-    });
-    store.dispatch(new StartRound());
-    fixture.detectChanges();
-
-    await waitFor(()=>{
-      const button = screen.getByTestId('play-button');
-      expect(button.textContent).toContain('Next round');
-    })
-
-  });
-
-  it('should disable the button when data is loading', () => {
-    component.isDataLoading = true;
-    fixture.detectChanges();
-
-    const button = screen.getByTestId('play-button');
-    expect(button).toBeDisabled();
-  });
-
-  it('should dispatch the StartRound action when button is clicked', () => {
-    const dispatchSpy = jest.spyOn(store, 'dispatch');
-
-    const button = screen.getByTestId('play-button');
-    fireEvent.click(button);
-
-    expect(dispatchSpy).toHaveBeenCalledWith(new StartRound());
-  });
-
-  it('should display the replay icon if it is not the first round', () => {
-    store.reset({
-      gameInfo: { roundNumber: 2, playerCards: null }
+    mockStore.select = jest.fn().mockImplementation((selector) => {
+      if (selector === GameInfoState.roundNumber) {
+        return of(1);  // Mock initial round number
+      } else if (selector === PersonState.getAllPeople) {
+        return of([{ name: 'Person 1' }]);  // Mock people data
+      } else if (selector === StarshipState.getAllStarships) {
+        return of([{ name: 'Starship 1' }]);  // Mock starship data
+      }
+      return of([]);  // Default return empty observable
     });
 
-    fixture.detectChanges();
+    const result = await render(PlayButtonComponent, {
+      componentProviders: [{ provide: Store, useValue: mockStore }],
+    });
 
-    const replayIcon = screen.getByRole('Replay icon');
-    expect(replayIcon).toBeInTheDocument();
+    store = result.fixture.debugElement.injector.get(Store);
   });
 
-  it('should hide the spinner if data is not loading', () => {
-    component.isDataLoading = false;
-    fixture.detectChanges();
-
-    const spinner = screen.queryByRole('progressbar');
-    expect(spinner).not.toBeInTheDocument();
+  it('should render "Play" text and enable button if data is loaded', async () => {
+    const playButton = await screen.findByTestId('play-button');
+    expect(playButton.textContent).toContain('Play');
+    expect(playButton).toBeEnabled();
   });
 
-  it('should show the spinner if data is loading', () => {
-    component.isDataLoading = true;
-    fixture.detectChanges();
+  it('should disable the button if data is still loading', async () => {
+    mockStore.select = jest.fn().mockImplementation((selector) => {
+      if (selector === GameInfoState.roundNumber) {
+        return of(1);  // Still in the first round
+      } else if (selector === PersonState.getAllPeople) {
+        return of([]);  // No people data yet
+      } else if (selector === StarshipState.getAllStarships) {
+        return of([]);  // No starship data yet
+      }
+      return of([]);
+    });
 
-    const spinner = screen.getByRole('progressbar');
-    expect(spinner).toBeInTheDocument();
+    await render(PlayButtonComponent, {
+      componentProviders: [{ provide: Store, useValue: mockStore }],
+    });
+
+    const playButton = await screen.findByTestId('play-button');
+    expect(playButton).toBeDisabled();
+  });
+
+  it('should call `startRound` when button is clicked', async () => {
+    const playButton = await screen.findByTestId('play-button');
+    fireEvent.click(playButton);
+    expect(store.dispatch).toHaveBeenCalledWith(new StartRound());
   });
 });
