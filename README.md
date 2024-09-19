@@ -13,6 +13,8 @@ random Star Wars characters or starships, compares them based on a common attrib
 <li>Angular (v18.0.0)</li>
 <li>Angular Material (18.2.4)</li>
 <li>NGXS (v18.1.1)</li>
+<li>Cypress (13.14.2)</li>
+<li>Jest (29.5.13)</li>
 </ul>
 
 ---
