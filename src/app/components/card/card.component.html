@@ -1,5 +1,6 @@
 <mat-card
   [class.winner-highlight]="borderHighlight"
+  data-testid="mat-card"
   appearance="outlined"
 >
   @if (!isGameStarted) {
@@ -12,6 +13,7 @@
       <img
         [width]="placeholderWidth"
         [height]="placeholderHeight"
+        alt="Star Wars logo"
         src="swlogo.png"
       />
     </mat-card-content>

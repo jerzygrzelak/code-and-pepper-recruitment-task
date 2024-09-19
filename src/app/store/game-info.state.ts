@@ -3,8 +3,9 @@ import { Action, Selector, State, StateContext, Store } from '@ngxs/store';
 import { Person, Starship } from '../models';
 import { PersonState, RemoveUsedPeople } from './person.state';
 import { RemoveUsedStarships, StarshipState } from './starship.state';
+import { GameModes } from '../enums';
 
-export type GameMode = 'PEOPLE' | 'STARSHIPS';
+export type GameMode = GameModes.PEOPLE | GameModes.STARSHIPS;
 
 export class StartRound {
   static readonly type = '[GameInfo] Start round';
@@ -55,7 +56,7 @@ export interface GameInfoStateModel {
     hasPlayer1Won: false,
     hasPlayer2Won: false,
     roundNumber: 1,
-    gameMode: 'PEOPLE',
+    gameMode: GameModes.PEOPLE,
     gameModeChangeTriggered: false,
   }
 })
@@ -139,7 +140,7 @@ export class GameInfoState {
   @Action(ChangeGameMode)
   changeGameMode(ctx: StateContext<GameInfoStateModel>) {
     const state = ctx.getState();
-    const newGameMode = state.gameMode === 'PEOPLE' ? 'STARSHIPS' : 'PEOPLE';
+    const newGameMode = state.gameMode === GameModes.PEOPLE ? GameModes.STARSHIPS : GameModes.PEOPLE;
 
     ctx.setState({
       ...state,
@@ -151,11 +152,11 @@ export class GameInfoState {
   @Action(UpdateCards)
   updatePlayerCards(ctx: StateContext<GameInfoStateModel>) {
     const state = ctx.getState();
-    const cards = state.gameMode === 'PEOPLE'
+    const cards = state.gameMode === GameModes.PEOPLE
       ? this.store.selectSnapshot(PersonState.getRandomPeople)
       : this.store.selectSnapshot(StarshipState.getRandomStarships);
 
-    state.gameMode === 'PEOPLE'
+    state.gameMode === GameModes.PEOPLE
       ? this.store.dispatch(new RemoveUsedPeople((cards as Person[])))
       : this.store.dispatch(new RemoveUsedStarships((cards as Starship[])));
 
@@ -176,10 +177,10 @@ export class GameInfoState {
       let player1Value: number = 0;
       let player2Value: number = 0;
 
-      if (state.gameMode === 'PEOPLE') {
+      if (state.gameMode === GameModes.PEOPLE) {
         player1Value = (player1Card as Person).mass;
         player2Value = (player2Card as Person).mass;
-      } else if (state.gameMode === 'STARSHIPS') {
+      } else if (state.gameMode === GameModes.STARSHIPS) {
         player1Value = (player1Card as Starship).crew;
         player2Value = (player2Card as Starship).crew;
       }

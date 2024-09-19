@@ -1,9 +1,12 @@
 import '@testing-library/jest-dom';
-
-import { CardComponent } from './card.component';
-import {render, screen, fireEvent, aliasedInput} from '@testing-library/angular'
-
+import '@angular/compiler';
+import 'zone.js';
 import { Person, Starship } from '../../models';
+import { CardComponent } from './card.component';
+import { render, screen } from '@testing-library/angular';
+import { TestBed } from '@angular/core/testing';
+import { BrowserDynamicTestingModule, platformBrowserDynamicTesting } from '@angular/platform-browser-dynamic/testing';
+import { GameModes } from '../../enums';
 
 const mockPerson: Person = {
   name: 'Luke Skywalker',
@@ -23,11 +26,15 @@ const mockStarship: Starship = {
 };
 
 describe('CardComponent', () => {
+  beforeAll(() => {
+    TestBed.initTestEnvironment(BrowserDynamicTestingModule, platformBrowserDynamicTesting());
+  });
+
   it('should display the "Press Play to start!" message when the game has not started', async () => {
     await render(CardComponent, {
       inputs: {
         isGameStarted: false,
-        gameMode: 'PEOPLE',
+        gameMode: GameModes.PEOPLE,
         person: null,
         starship: null,
         borderHighlight: false,
@@ -37,18 +44,31 @@ describe('CardComponent', () => {
     expect(screen.getByTestId('mat-card-title').textContent).toContain('Press Play to start!');
   });
 
+  it('should display the Star Wars logo when the game has not started', async () => {
+    await render(CardComponent, {
+      inputs: {
+        isGameStarted: false,
+        gameMode: GameModes.PEOPLE,
+        person: null,
+        starship: null,
+        borderHighlight: false,
+      }
+    });
+
+    expect(screen.getByAltText('Star Wars logo')).toBeTruthy();
+  });
+
   it('should display person details in PEOPLE mode when the game has started', async () => {
     await render(CardComponent, {
       inputs: {
         isGameStarted: true,
-        gameMode: 'PEOPLE',
+        gameMode: GameModes.PEOPLE,
         person: mockPerson,
         starship: null,
         borderHighlight: false,
       }
     });
 
-    // Using test IDs for specific element checking
     expect(screen.getByText('Luke Skywalker')).toBeInTheDocument();
     expect(screen.getByTestId('mass')).toHaveTextContent('Mass: 77kg');
     expect(screen.getByTestId('height')).toHaveTextContent('Height: 1.72m');
@@ -78,14 +98,14 @@ describe('CardComponent', () => {
     await render(CardComponent, {
       inputs: {
         isGameStarted: true,
-        gameMode: 'PEOPLE',
+        gameMode: GameModes.PEOPLE,
         person: mockPerson,
         starship: null,
         borderHighlight: true,
       }
     });
 
-    const card = screen.getByRole('article'); // mat-card can be selected using role
+    const card = screen.getByTestId('mat-card');
     expect(card).toHaveClass('winner-highlight');
   });
 });

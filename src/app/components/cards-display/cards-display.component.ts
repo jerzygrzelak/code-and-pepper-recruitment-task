@@ -5,6 +5,7 @@ import { combineLatestWith, map } from 'rxjs';
 import { Store } from '@ngxs/store';
 import { Person, Starship } from '../../models';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { GameModes } from '../../enums';
 
 @Component({
   selector: 'app-cards-display',
@@ -40,7 +41,7 @@ export class CardsDisplayComponent implements OnInit {
         this.hasPlayer1Won = playerWon.hasPlayer1Won;
         this.hasPlayer2Won = playerWon.hasPlayer2Won;
 
-        if (gameMode === 'PEOPLE') {
+        if (gameMode === GameModes.PEOPLE) {
           this.player1Person = cards.player1Card as Person;
           this.player2Person = cards.player2Card as Person;
         } else {

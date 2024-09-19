@@ -3,6 +3,7 @@
   <mat-select
     (selectionChange)="onGameModeChange()"
     [(value)]="gameMode"
+    data-testid="game-mode-select"
   >
     <mat-option [value]="'PEOPLE'">People</mat-option>
     <mat-option [value]="'STARSHIPS'">Starships</mat-option>

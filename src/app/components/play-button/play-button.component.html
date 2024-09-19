@@ -1,6 +1,7 @@
 <button
   (click)="startRound()"
   [disabled]="isDataLoading"
+  data-testid="play-button"
   extended mat-fab
 >
   @if (isDataLoading) {

@@ -19,11 +19,14 @@
     "module": "ES2022",
     "strictPropertyInitialization": false,
     "useDefineForClassFields": false,
-    "types": ["jest"],
+    "types": [
+      "jest",
+      "@testing-library/jest-dom"
+    ],
     "lib": [
       "ES2022",
       "dom"
-    ]
+    ],
   },
   "angularCompilerOptions": {
     "enableI18nLegacyMessageIdFormat": false,
