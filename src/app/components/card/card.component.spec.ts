@@ -80,7 +80,7 @@ describe('CardComponent', () => {
     await render(CardComponent, {
       inputs: {
         isGameStarted: true,
-        gameMode: 'STARSHIPS',
+        gameMode: GameModes.STARSHIPS,
         person: null,
         starship: mockStarship,
         borderHighlight: false,

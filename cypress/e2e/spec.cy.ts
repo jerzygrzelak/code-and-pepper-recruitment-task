@@ -4,7 +4,7 @@ describe('template spec', () => {
   });
 
   describe('Game Cards - Initial State', () => {
-    it('should display "Press Play to start!" text and the Star Wars logo when the game is not started', () => {
+    it('should display "Press Play to start!" text and the Star Wars logo when the game is not started.', () => {
       cy.get('[data-testid="mat-card"]').each(card => {
         cy.wrap(card).should('contain.text', 'Press Play to start!');
       });
@@ -16,14 +16,14 @@ describe('template spec', () => {
   });
 
   describe('Play Button', () => {
-    it('should disable the button and display the spinner at the start of the game when data is loading', () => {
+    it('should disable the button and display the spinner at the start of the game when data is loading.', () => {
       cy.get('[data-testid="play-button"]').should('be.disabled');
 
       cy.get('[data-testid="play-button"] mat-spinner').should('be.visible');
     });
 
 
-    it('should change the button text to "Next round" and show the replay icon after clicking', () => {
+    it('should change the button text to "Next round" and show the replay icon after clicking.', () => {
       cy.get('[data-testid="play-button"]').should('not.be.disabled')
 
       cy.get('[data-testid="play-button"]').click();
@@ -37,11 +37,11 @@ describe('template spec', () => {
   });
 
   describe('Game Mode Selection', () => {
-    it('should have "People" as the default option in the dropdown', () => {
+    it('should have "People" as the default option in the dropdown.', () => {
       cy.get('[data-testid="game-mode-select"]').should('have.text', 'People');
     });
 
-    it('should show the "Starships" option when the dropdown is opened', () => {
+    it('should show the "Starships" option when the dropdown is opened.', () => {
       cy.get('[data-testid="game-mode-select"]').click();
 
       cy.get('mat-option').contains('Starships').should('be.visible');
@@ -51,13 +51,13 @@ describe('template spec', () => {
   });
 
   describe('Game Cards - People Mode', () => {
-    it('should display two cards and an h1 element with text "VS"', () => {
+    it('should display two cards and an h1 element with text "VS".', () => {
       cy.get('[data-testid="mat-card"]').should('have.length', 2);
 
       cy.get('h1').should('contain.text', 'VS');
     });
 
-    it('should display details for People in both cards at the start of the game', () => {
+    it('should display details for People in both cards at the start of the game.', () => {
       cy.get('[data-testid="mat-card"]').first().within(() => {
         cy.get('[data-testid="mass"]').should('contain.text', 'Mass:');
         cy.get('[data-testid="height"]').should('contain.text', 'Height:');
@@ -73,7 +73,7 @@ describe('template spec', () => {
       });
     });
 
-    it('should determine which card has the greater mass and is highlighted (highlighting both in case of a draw)', () => {
+    it('should determine which card has the greater mass and is highlighted (highlighting both in case of a draw).', () => {
       cy.get('[data-testid="mat-card"]').eq(0)
         .find('[data-testid="mass"]')
         .invoke('text')
@@ -105,7 +105,7 @@ describe('template spec', () => {
   });
 
   describe('Game Cards - Starships Mode', () => {
-    it('should display starship data correctly when game mode is changed and play is pressed', () => {
+    it('should display starship data correctly when game mode is changed and play is pressed.', () => {
       cy.get('[data-testid="game-mode-select"]').click();
       cy.get('mat-option').contains('Starships').click({force: true});
 
@@ -128,7 +128,7 @@ describe('template spec', () => {
       });
     });
 
-    it('should determine which card has the greater crew number and is highlighted (highlighting both in case of a draw)', () => {
+    it('should determine which card has the greater crew number and is highlighted (highlighting both in case of a draw).', () => {
       cy.get('[data-testid="mat-card"]').eq(0)
         .find('[data-testid="crew"]')
         .invoke('text')
@@ -160,7 +160,7 @@ describe('template spec', () => {
   });
 
   describe('Round Counter', () => {
-    it('should increase the round number after clicking the play button', () => {
+    it('should increase the round number after clicking the play button.', () => {
       cy.get('h4').contains('Round').invoke('text').then((text: string) => {
         const initialRoundNumber = parseInt(text.match(/\d+/)[0]);
 
@@ -225,7 +225,7 @@ describe('template spec', () => {
       });
     };
 
-    it('should play the game three times and verify scores are updated correctly', () => {
+    it('should play the game three times and verify scores are updated correctly.', () => {
       Cypress._.times(3, () => {
         playAndVerifyScores();
       });
