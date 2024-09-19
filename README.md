@@ -24,11 +24,25 @@ random Star Wars characters or starships, compares them based on a common attrib
 
 ---
 
-### Running the project.
+### Running the project and tests.
 #### To start the app locally run: 
 ```
 npm install
 ng serve
 ```
 
-#### To start the app locally run: 
+#### To run unit tests run: 
+```
+jest
+```
+
+#### To run e2e tests locally run:
+```
+ng serve --host 0.0.0.0
+npx cypress run
+```
+
+### To open Cypress run:
+```
+npx cypress open
+```
