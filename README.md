@@ -43,7 +43,7 @@ ng serve --host 0.0.0.0
 npx cypress run
 ```
 
-### To open Cypress run:
+#### To open Cypress run:
 ```
 npx cypress open
 ```
