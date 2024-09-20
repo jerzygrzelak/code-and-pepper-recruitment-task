@@ -28,13 +28,13 @@ describe('PlayButtonComponent', () => {
 
     mockStore.select = jest.fn().mockImplementation((selector) => {
       if (selector === GameInfoState.roundNumber) {
-        return of(1);  // Mock initial round number
+        return of(1);
       } else if (selector === PersonState.getAllPeople) {
-        return of([{ name: 'Person 1' }]);  // Mock people data
+        return of([{ name: 'Person 1' }]);
       } else if (selector === StarshipState.getAllStarships) {
-        return of([{ name: 'Starship 1' }]);  // Mock starship data
+        return of([{ name: 'Starship 1' }]);
       }
-      return of([]);  // Default return empty observable
+      return of([]);
     });
 
     const result = await render(PlayButtonComponent, {
@@ -53,11 +53,11 @@ describe('PlayButtonComponent', () => {
   it('should disable the button if data is still loading', async () => {
     mockStore.select = jest.fn().mockImplementation((selector) => {
       if (selector === GameInfoState.roundNumber) {
-        return of(1);  // Still in the first round
+        return of(1);
       } else if (selector === PersonState.getAllPeople) {
-        return of([]);  // No people data yet
+        return of([]);
       } else if (selector === StarshipState.getAllStarships) {
-        return of([]);  // No starship data yet
+        return of([]);
       }
       return of([]);
     });

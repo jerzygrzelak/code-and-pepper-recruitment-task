@@ -17,19 +17,17 @@ describe('RoundCounterComponent', () => {
   // });
 
   beforeEach(async () => {
-    // Mock the store's select method
     const mockStore = {
       select: jest.fn()
     };
 
     mockStore.select = jest.fn().mockImplementation((selector) => {
       if (selector === GameInfoState.roundNumber) {
-        return of(2);  // Mock round number as 2
+        return of(2);
       }
       return of(0);
     });
 
-    // Render the component with the mocked store
     TestBed.initTestEnvironment(BrowserDynamicTestingModule, platformBrowserDynamicTesting());
     await render(RoundCounterComponent, {
       componentProviders: [{ provide: Store, useValue: mockStore }],
@@ -38,17 +36,15 @@ describe('RoundCounterComponent', () => {
   });
 
   it('should display the correct round number after transformation', () => {
-    // Verify the transformed round number is displayed correctly
     const roundNumberElement = screen.getByText(/Round 1/);
     expect(roundNumberElement).toBeInTheDocument();
   });
 
   it('should handle the first round correctly', () => {
-    // Change mock to simulate first round
     const mockStore = {
       select: jest.fn().mockImplementation((selector) => {
         if (selector === GameInfoState.roundNumber) {
-          return of(1);  // Mock round number as 1
+          return of(1);
         }
         return of(0);
       })

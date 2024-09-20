@@ -38,7 +38,7 @@
 //
 //   it('should dispatch TriggerChangeGameMode action on selection change', async () => {
 //     const dispatchSpy = jest.spyOn(mockStore, 'dispatch');
-//     mockStore.select = (selector: any) => of('PEOPLE'); // Mock selector to return 'PEOPLE'
+//     mockStore.select = (selector: any) => of('PEOPLE');
 //
 //     await render(GameModeSelectComponent, {
 //       providers: [{ provide: Store, useValue: mockStore }],
@@ -50,7 +50,7 @@
 //   });
 //
 //   it('should bind gameMode to the select element', async () => {
-//     mockStore.select = (selector: any) => of('STARSHIPS'); // Mock selector to return 'STARSHIPS'
+//     mockStore.select = (selector: any) => of('STARSHIPS');
 //
 //     await render(GameModeSelectComponent, {
 //       providers: [{ provide: Store, useValue: mockStore }],
